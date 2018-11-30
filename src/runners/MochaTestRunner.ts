@@ -1,3 +1,4 @@
+import * as escapeStringRegexp from "escape-string-regexp";
 import { join } from "path";
 import { debug, WorkspaceFolder } from "vscode";
 
@@ -31,7 +32,9 @@ export class MochaTestRunner implements ITestRunnerInterface {
 
     const command = `${
       this.binPath
-    } ${fileName} --grep="${testName}" ${additionalArguments}`;
+    } ${additionalArguments} ${fileName} --grep="${escapeStringRegexp(
+      testName
+    )}"`;
 
     const terminal = this.terminalProvider.get(
       { env: environmentVariables },
